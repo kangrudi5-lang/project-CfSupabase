@@ -142,7 +142,7 @@
     }
 
     function validate() {
-      const validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value.trim());
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
       const validPassword = password.value.length >= 6;
       emailError.classList.toggle('hidden', validEmail);
       passwordError.classList.toggle('hidden', validPassword);
