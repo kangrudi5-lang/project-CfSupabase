@@ -115,13 +115,15 @@
             Coba validasi form
           </button>
           <p class="mt-8 text-center text-xs leading-5 text-slate-500">Dengan masuk, Anda menyetujui <a href="#" class="text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white">Ketentuan Layanan</a> dan <a href="#" class="text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white">Kebijakan Privasi</a>.</p>
-          <p class="mt-6 text-center text-xs text-slate-600">Demo UI · Autentikasi belum terhubung ke Supabase</p>
+          <p class="mt-6 text-center text-xs text-slate-600">Login aman melalui Supabase Auth</p>
         </div>
       </section>
     </div>
   </main>
 
-  <script>
+  <script type="module">
+    import { supabase } from './assets/js/supabase.js';
+
     const form = document.getElementById('loginForm');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
@@ -130,6 +132,7 @@
     const notice = document.getElementById('notice');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
+    const btnArrow = document.getElementById('btnArrow');
 
     function showNotice(message, type = 'info') {
       notice.textContent = message;
@@ -137,8 +140,9 @@
         ? 'border-rose-400/20 bg-rose-400/10 text-rose-200'
         : 'border-indigo-400/20 bg-indigo-400/10 text-indigo-200');
     }
+
     function validate() {
-      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      const validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value.trim());
       const validPassword = password.value.length >= 6;
       emailError.classList.toggle('hidden', validEmail);
       passwordError.classList.toggle('hidden', validPassword);
@@ -146,34 +150,85 @@
       password.classList.toggle('border-rose-400/70', !validPassword);
       return validEmail && validPassword;
     }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.classList.toggle('opacity-70', loading);
+      submitBtn.classList.toggle('cursor-not-allowed', loading);
+      btnText.textContent = loading ? 'Memeriksa...' : 'Masuk';
+      if (btnArrow) btnArrow.classList.toggle('hidden', loading);
+    }
+
     document.getElementById('togglePassword').addEventListener('click', () => {
       const visible = password.type === 'password';
       password.type = visible ? 'text' : 'password';
       document.getElementById('togglePassword').setAttribute('aria-label', visible ? 'Sembunyikan password' : 'Tampilkan password');
     });
+
     [email, password].forEach(input => input.addEventListener('input', () => {
       emailError.classList.add('hidden');
       passwordError.classList.add('hidden');
       input.classList.remove('border-rose-400/70');
       notice.classList.add('hidden');
     }));
-    form.addEventListener('submit', event => {
+
+    // If the user already has an active session, go straight to the admin page.
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) throw error;
+      if (session) window.location.replace('./admin/');
+    } catch (error) {
+      console.error('Supabase session check failed:', error);
+      showNotice('Koneksi ke layanan login gagal. Periksa konfigurasi Supabase dan coba muat ulang halaman.', 'error');
+    }
+
+    form.addEventListener('submit', async event => {
       event.preventDefault();
       if (!validate()) {
         showNotice('Periksa kembali email dan password Anda.', 'error');
         return;
       }
-      showNotice('Validasi berhasil. Login belum aktif karena Supabase belum dihubungkan.');
+
+      setLoading(true);
+      notice.classList.add('hidden');
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.value.trim(),
+          password: password.value
+        });
+
+        if (error) throw error;
+        if (!data.session) throw new Error('Login belum menghasilkan sesi. Periksa apakah email sudah dikonfirmasi.');
+
+        showNotice('Login berhasil. Mengalihkan ke halaman admin...');
+        window.location.replace('./admin/');
+      } catch (error) {
+        console.error('Login failed:', error);
+        const message = error?.message || 'Login gagal. Silakan coba lagi.';
+        showNotice(
+          /invalid login credentials/i.test(message)
+            ? 'Email atau password salah, atau akun belum dapat digunakan. Periksa kembali data login.'
+            : /email not confirmed/i.test(message)
+              ? 'Email akun belum dikonfirmasi. Periksa email masuk untuk tautan konfirmasi.'
+              : message,
+          'error'
+        );
+      } finally {
+        setLoading(false);
+      }
     });
+
     document.getElementById('demoBtn').addEventListener('click', () => {
-      email.value = 'belajar@example.com';
-      password.value = 'belajar123';
-      validate();
-      showNotice('Contoh data terisi. Klik Masuk untuk mencoba validasi form.');
+      email.value = '';
+      password.value = '';
+      email.focus();
+      showNotice('Masukkan email dan password akun aplikasi Supabase Anda untuk login.');
     });
+
     document.getElementById('forgotLink').addEventListener('click', event => {
       event.preventDefault();
-      showNotice('Fitur reset password akan dibuat setelah Supabase Auth terhubung.');
+      showNotice('Reset password belum diaktifkan. Kita bisa menambahkannya setelah login dasar berhasil.');
     });
   </script>
 </body>
