@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>Masuk — Nova</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        animation: {
+          'float': 'float 7s ease-in-out infinite',
+          'fade-up': 'fadeUp .7s cubic-bezier(.2,.8,.2,1) both',
+          'pulse-soft': 'pulseSoft 4s ease-in-out infinite'
+        },
+        keyframes: {
+          float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-16px)' } },
+          fadeUp: { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+          pulseSoft: { '0%,100%': { opacity: '.35', transform: 'scale(1)' }, '50%': { opacity: '.65', transform: 'scale(1.08)' } }
+        }
+      }}
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { background: #080d19; }
+    .glass { background: rgba(17, 25, 45, .76); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); }
+    .grid-bg { background-image: linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px); background-size: 42px 42px; mask-image: linear-gradient(to bottom, black, transparent 92%); }
+    .field:focus { border-color: #818cf8; box-shadow: 0 0 0 4px rgba(129,140,248,.12); outline: none; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body class="min-h-full overflow-x-hidden font-sans text-slate-100 antialiased selection:bg-indigo-400/30">
+  <div class="grid-bg pointer-events-none fixed inset-0"></div>
+  <div class="pointer-events-none fixed -left-32 top-12 h-80 w-80 animate-pulse-soft rounded-full bg-indigo-600/20 blur-[100px]"></div>
+  <div class="pointer-events-none fixed -right-24 bottom-0 h-96 w-96 animate-pulse-soft rounded-full bg-cyan-500/10 blur-[110px]" style="animation-delay:1.5s"></div>
+
+  <main class="relative mx-auto flex min-h-screen max-w-7xl items-center justify-center px-5 py-10 sm:px-8">
+    <div class="grid w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-900/40 shadow-2xl shadow-black/30 lg:min-h-[620px] lg:grid-cols-2">
+      <section class="relative hidden flex-col justify-between overflow-hidden border-r border-white/10 bg-gradient-to-br from-indigo-950/90 via-slate-950 to-slate-950 p-12 lg:flex">
+        <div class="absolute -right-20 top-28 h-64 w-64 animate-float rounded-full border border-indigo-400/20"></div>
+        <div class="absolute -right-8 top-40 h-40 w-40 animate-float rounded-full border border-cyan-300/20" style="animation-delay:-2s"></div>
+        <div class="absolute bottom-20 left-12 h-44 w-44 rounded-full bg-indigo-500/10 blur-3xl"></div>
+        <a href="#" class="relative flex items-center gap-3">
+          <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-400 to-cyan-400 text-lg font-extrabold text-slate-950 shadow-lg shadow-indigo-500/20">N</span>
+          <span class="text-lg font-bold tracking-tight">nova<span class="text-indigo-300">.</span></span>
+        </a>
+        <div class="relative animate-fade-up" style="animation-delay:.12s">
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-300/20 bg-indigo-300/10 px-3 py-1.5 text-xs font-medium text-indigo-200">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Ruang kerja digital Anda
+          </div>
+          <h1 class="max-w-md text-4xl font-semibold leading-tight tracking-tight xl:text-5xl">Mulai dari sini.<br><span class="bg-gradient-to-r from-indigo-300 to-cyan-300 bg-clip-text text-transparent">Bangun hal hebat.</span></h1>
+          <p class="mt-5 max-w-sm text-sm leading-7 text-slate-400">Masuk ke ruang kerja Anda dan lanjutkan ide yang sedang Anda bangun.</p>
+          <div class="mt-10 flex items-center gap-3">
+            <div class="flex -space-x-2">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-950 bg-indigo-400 text-xs font-bold text-slate-950">D</span>
+              <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-950 bg-cyan-300 text-xs font-bold text-slate-950">A</span>
+              <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-950 bg-violet-300 text-xs font-bold text-slate-950">R</span>
+            </div>
+            <p class="text-xs text-slate-400">Satu langkah kecil, setiap hari.</p>
+          </div>
+        </div>
+        <p class="relative text-xs text-slate-500">© 2026 Nova UI · Dibuat untuk terus berkembang.</p>
+      </section>
+
+      <section class="glass flex items-center justify-center px-6 py-10 sm:px-12 lg:px-14">
+        <div class="w-full max-w-sm animate-fade-up">
+          <a href="#" class="mb-10 flex items-center gap-3 lg:hidden">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-400 to-cyan-400 font-extrabold text-slate-950">N</span>
+            <span class="text-lg font-bold">nova<span class="text-indigo-300">.</span></span>
+          </a>
+          <div class="mb-8">
+            <p class="mb-3 text-xs font-semibold uppercase tracking-[.22em] text-indigo-300">Selamat datang kembali</p>
+            <h2 class="text-3xl font-semibold tracking-tight">Masuk ke akun</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-400">Masukkan detail akun Anda untuk melanjutkan.</p>
+          </div>
+
+          <form id="loginForm" class="space-y-5" novalidate>
+            <div>
+              <label for="email" class="mb-2 block text-sm font-medium text-slate-200">Alamat email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="nama@email.com" class="field w-full rounded-xl border border-slate-700/80 bg-slate-950/60 px-4 py-3.5 text-sm text-white placeholder:text-slate-600 transition duration-200">
+              <p id="emailError" class="mt-1.5 hidden text-xs text-rose-300">Masukkan alamat email yang valid.</p>
+            </div>
+            <div>
+              <div class="mb-2 flex items-center justify-between gap-3">
+                <label for="password" class="block text-sm font-medium text-slate-200">Password</label>
+                <a href="#" id="forgotLink" class="text-xs font-medium text-indigo-300 transition hover:text-indigo-200">Lupa password?</a>
+              </div>
+              <div class="relative">
+                <input id="password" name="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Minimal 6 karakter" class="field w-full rounded-xl border border-slate-700/80 bg-slate-950/60 px-4 py-3.5 pr-12 text-sm text-white placeholder:text-slate-600 transition duration-200">
+                <button id="togglePassword" type="button" aria-label="Tampilkan password" class="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-slate-500 transition hover:text-slate-200">
+                  <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <p id="passwordError" class="mt-1.5 hidden text-xs text-rose-300">Password minimal 6 karakter.</p>
+            </div>
+            <div class="flex items-center">
+              <input id="remember" type="checkbox" class="h-4 w-4 rounded border-slate-600 bg-slate-950 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-slate-900">
+              <label for="remember" class="ml-2.5 text-sm text-slate-400">Ingat saya</label>
+            </div>
+            <button id="submitBtn" type="submit" class="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-950/40 transition duration-200 hover:-translate-y-0.5 hover:from-indigo-400 hover:to-violet-400 hover:shadow-indigo-500/20 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 focus:ring-offset-slate-900">
+              <span id="btnText">Masuk</span>
+              <svg id="btnArrow" class="transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <div id="notice" role="status" aria-live="polite" class="hidden rounded-xl border px-4 py-3 text-sm"></div>
+          </form>
+
+          <div class="my-7 flex items-center gap-4"><div class="h-px flex-1 bg-slate-800"></div><span class="text-xs text-slate-500">atau</span><div class="h-px flex-1 bg-slate-800"></div></div>
+          <button id="demoBtn" type="button" class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700/80 bg-white/[.03] px-4 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-600 hover:bg-white/[.06] hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+            Coba validasi form
+          </button>
+          <p class="mt-8 text-center text-xs leading-5 text-slate-500">Dengan masuk, Anda menyetujui <a href="#" class="text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white">Ketentuan Layanan</a> dan <a href="#" class="text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white">Kebijakan Privasi</a>.</p>
+          <p class="mt-6 text-center text-xs text-slate-600">Demo UI · Autentikasi belum terhubung ke Supabase</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const notice = document.getElementById('notice');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+
+    function showNotice(message, type = 'info') {
+      notice.textContent = message;
+      notice.className = 'rounded-xl border px-4 py-3 text-sm ' + (type === 'error'
+        ? 'border-rose-400/20 bg-rose-400/10 text-rose-200'
+        : 'border-indigo-400/20 bg-indigo-400/10 text-indigo-200');
+    }
+    function validate() {
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      const validPassword = password.value.length >= 6;
+      emailError.classList.toggle('hidden', validEmail);
+      passwordError.classList.toggle('hidden', validPassword);
+      email.classList.toggle('border-rose-400/70', !validEmail);
+      password.classList.toggle('border-rose-400/70', !validPassword);
+      return validEmail && validPassword;
+    }
+    document.getElementById('togglePassword').addEventListener('click', () => {
+      const visible = password.type === 'password';
+      password.type = visible ? 'text' : 'password';
+      document.getElementById('togglePassword').setAttribute('aria-label', visible ? 'Sembunyikan password' : 'Tampilkan password');
+    });
+    [email, password].forEach(input => input.addEventListener('input', () => {
+      emailError.classList.add('hidden');
+      passwordError.classList.add('hidden');
+      input.classList.remove('border-rose-400/70');
+      notice.classList.add('hidden');
+    }));
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!validate()) {
+        showNotice('Periksa kembali email dan password Anda.', 'error');
+        return;
+      }
+      showNotice('Validasi berhasil. Login belum aktif karena Supabase belum dihubungkan.');
+    });
+    document.getElementById('demoBtn').addEventListener('click', () => {
+      email.value = 'belajar@example.com';
+      password.value = 'belajar123';
+      validate();
+      showNotice('Contoh data terisi. Klik Masuk untuk mencoba validasi form.');
+    });
+    document.getElementById('forgotLink').addEventListener('click', event => {
+      event.preventDefault();
+      showNotice('Fitur reset password akan dibuat setelah Supabase Auth terhubung.');
+    });
+  </script>
+</body>
+</html>
