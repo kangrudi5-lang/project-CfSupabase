@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Admin Dashboard | CfSupabase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: "#eef2ff", 100: "#e0e7ff", 500: "#6366f1", 600: "#4f46e5", 700: "#4338ca" }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="min-h-screen md:flex">
+    <aside class="border-b border-white/10 bg-slate-900/80 p-5 md:flex md:w-64 md:flex-col md:border-b-0 md:border-r">
+      <a href="./" class="flex items-center gap-3 font-semibold tracking-tight">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-500 text-lg font-bold">C</span>
+        <span>CfSupabase<span class="block text-xs font-normal text-slate-400">Admin Panel</span></span>
+      </a>
+      <nav class="mt-8">
+        <div class="flex items-center gap-3 rounded-xl bg-indigo-500/15 px-4 py-3 text-sm font-medium text-indigo-200">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          Dashboard
+        </div>
+      </nav>
+      <div class="mt-8 hidden rounded-xl border border-white/10 bg-white/[0.03] p-4 md:block">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Status aplikasi</p>
+        <p class="mt-2 flex items-center gap-2 text-sm"><span class="h-2 w-2 rounded-full bg-emerald-400"></span> Supabase Auth</p>
+        <p class="mt-1 text-xs text-slate-500">Status sesi diperiksa saat halaman dibuka.</p>
+      </div>
+      <div class="mt-auto hidden pt-8 text-xs text-slate-500 md:block">CfSupabase · Admin</div>
+    </aside>
+
+    <main class="min-w-0 flex-1">
+      <header class="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-5 sm:px-8">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-[0.18em] text-indigo-300">Workspace</p>
+          <h1 class="mt-1 text-xl font-semibold sm:text-2xl">Dashboard</h1>
+        </div>
+        <button id="logoutButton" type="button" class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+          Logout
+        </button>
+      </header>
+
+      <section class="px-5 py-8 sm:px-8">
+        <div id="loadingState" class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-sm text-slate-300">
+          Memeriksa sesi login...
+        </div>
+
+        <div id="dashboardContent" class="hidden">
+          <div class="mb-8">
+            <p class="text-slate-400">Selamat datang kembali,</p>
+            <h2 id="welcomeEmail" class="mt-1 break-all text-2xl font-semibold">Admin</h2>
+            <p class="mt-2 text-sm text-slate-400">Anda berhasil masuk ke area admin.</p>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <article class="rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-lg shadow-black/10">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/15 text-indigo-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-slate-400">Autentikasi</p>
+              <p class="mt-1 text-lg font-semibold">Terkonfirmasi</p>
+              <p class="mt-1 text-xs text-emerald-300">Sesi pengguna aktif</p>
+            </article>
+            <article class="rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-lg shadow-black/10">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-500/15 text-sky-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-slate-400">Status sesi</p>
+              <p class="mt-1 text-lg font-semibold">Aktif</p>
+              <p class="mt-1 text-xs text-slate-500">Diperiksa melalui Supabase Auth</p>
+            </article>
+            <article class="rounded-2xl border border-white/10 bg-slate-900 p-5 shadow-lg shadow-black/10 sm:col-span-2 xl:col-span-1">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500/15 text-amber-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 15 4-4 3 2 5-6"/></svg>
+              </div>
+              <p class="mt-4 text-sm text-slate-400">Ringkasan</p>
+              <p class="mt-1 text-lg font-semibold">Dashboard siap</p>
+              <p class="mt-1 text-xs text-slate-500">Konten fitur bisa ditambahkan berikutnya</p>
+            </article>
+          </div>
+
+          <div class="mt-6 rounded-2xl border border-indigo-400/20 bg-indigo-500/[0.07] p-5">
+            <h3 class="font-semibold">Berhasil login</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-300">Halaman ini memeriksa sesi Supabase saat dibuka. Jika sesi tidak ditemukan atau sudah berakhir, Anda akan diarahkan kembali ke halaman login.</p>
+          </div>
+        </div>
+
+        <div id="errorState" class="hidden rounded-2xl border border-rose-400/20 bg-rose-500/10 p-5 text-sm text-rose-200" role="alert"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase } from "../assets/js/supabase.js";
+
+    const loadingState = document.getElementById("loadingState");
+    const dashboardContent = document.getElementById("dashboardContent");
+    const welcomeEmail = document.getElementById("welcomeEmail");
+    const errorState = document.getElementById("errorState");
+    const logoutButton = document.getElementById("logoutButton");
+
+    function showError(message) {
+      loadingState.classList.add("hidden");
+      errorState.textContent = message;
+      errorState.classList.remove("hidden");
+    }
+
+    async function checkSession() {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+
+        if (!data.session) {
+          window.location.replace("../index.html");
+          return;
+        }
+
+        welcomeEmail.textContent = data.session.user.email || "Pengguna";
+        loadingState.classList.add("hidden");
+        dashboardContent.classList.remove("hidden");
+      } catch (error) {
+        console.error("Gagal memeriksa sesi:", error);
+        showError("Tidak dapat memeriksa sesi. Pastikan konfigurasi Supabase di assets/js/supabase.js sudah benar, lalu muat ulang halaman.");
+      }
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      logoutButton.textContent = "Memproses...";
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+        window.location.replace("../index.html");
+      } catch (error) {
+        console.error("Logout gagal:", error);
+        logoutButton.disabled = false;
+        logoutButton.textContent = "Logout";
+        showError("Logout gagal. Periksa koneksi, lalu coba lagi.");
+      }
+    });
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT" || !session) {
+        window.location.replace("../index.html");
+      }
+    });
+
+    checkSession();
+  </script>
+</body>
+</html>
